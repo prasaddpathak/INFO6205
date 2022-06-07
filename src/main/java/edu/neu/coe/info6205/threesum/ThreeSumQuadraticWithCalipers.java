@@ -27,7 +27,7 @@ public class ThreeSumQuadraticWithCalipers implements ThreeSum {
     public Triple[] getTriples() {
         List<Triple> triples = new ArrayList<>();
         Collections.sort(triples); // ???
-        for (int i = 0; i < length - 2; i++)
+        for (int i = 0; i < length - 1; i++)
             triples.addAll(calipers(a, i, Triple::sum));
         return triples.stream().distinct().toArray(Triple[]::new);
     }
@@ -43,10 +43,37 @@ public class ThreeSumQuadraticWithCalipers implements ThreeSum {
     public static List<Triple> calipers(int[] a, int i, Function<Triple, Integer> function) {
         List<Triple> triples = new ArrayList<>();
         // FIXME : implement getTriples
+        int diff = -a[i];
+        int l = i + 1;
+        int h = a.length -1;
+
+        while(l < h){
+            Triple t = new Triple(a[i], a[l], a[h]);
+            if (function.apply(t) == 0){
+                triples.add(t);
+                System.out.println("Triple Found" + a[i] + a[l] + a[h] );
+                l++;
+                h--;
+            }
+            else if (function.apply(t) < 0) {
+                l++;
+            }
+            else if (function.apply(t) > 0) {
+                h--;
+            }
+        }
         // END 
         return triples;
     }
 
     private final int[] a;
     private final int length;
+
+    public static void main (String[] args) {
+//        System.out.println("Hello");
+        int[] a = {-100, -90, -79, -68, -62, -51, -44, -37, -27, -17, -11, -4, 2, 9, 16, 32, 42, 49, 57, 67};
+        ThreeSumQuadraticWithCalipers tsqc = new ThreeSumQuadraticWithCalipers(a);
+        Triple[] tri = tsqc.getTriples();
+        System.out.println(tri.length);
+    }
 }

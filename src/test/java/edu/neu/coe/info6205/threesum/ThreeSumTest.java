@@ -74,7 +74,7 @@ public class ThreeSumTest {
         assertEquals(1, new ThreeSumCubic(ints).getTriples().length);
     }
 
-    @Ignore // Slow
+    @Test // Slow
     public void testGetTriples3() {
         Supplier<int[]> intsSupplier = new Source(1000, 1000).intsSupplier(10);
         int[] ints = intsSupplier.get();
@@ -85,7 +85,7 @@ public class ThreeSumTest {
         assertEquals(expected1, triplesQuadratic.length);
     }
 
-    @Ignore // Slow
+    @Test // Slow
     public void testGetTriples4() {
         Supplier<int[]> intsSupplier = new Source(1500, 1000).intsSupplier(10);
         int[] ints = intsSupplier.get();
@@ -108,7 +108,7 @@ public class ThreeSumTest {
         assertEquals(4, new ThreeSumCubic(ints).getTriples().length);
     }
 
-    @Ignore
+    @Test
     public void testGetTriplesC1() {
         Supplier<int[]> intsSupplier = new Source(20, 20, 1L).intsSupplier(10);
         int[] ints = intsSupplier.get();
@@ -121,7 +121,7 @@ public class ThreeSumTest {
         assertEquals(4, triples2.length);
     }
 
-    @Ignore
+    @Test
     public void testGetTriplesC2() {
         Supplier<int[]> intsSupplier = new Source(10, 15, 3L).intsSupplier(10);
         int[] ints = intsSupplier.get();
@@ -133,7 +133,7 @@ public class ThreeSumTest {
         assertEquals(1, new ThreeSumCubic(ints).getTriples().length);
     }
 
-    @Ignore
+    @Test
     public void testGetTriplesC3() {
         Supplier<int[]> intsSupplier = new Source(1000, 1000).intsSupplier(10);
         int[] ints = intsSupplier.get();
@@ -144,7 +144,7 @@ public class ThreeSumTest {
         assertEquals(expected1, triplesQuadratic.length);
     }
 
-    @Ignore
+    @Test
     public void testGetTriplesC4() {
         Supplier<int[]> intsSupplier = new Source(1500, 1000).intsSupplier(10);
         int[] ints = intsSupplier.get();
