@@ -51,7 +51,6 @@ public class ThreeSumQuadratic implements ThreeSum {
             }
             else {
                 triples.add(new Triple(a[i], a[l], a[h]));
-                System.out.println("Triple Found" + a[i] + a[l] + a[h] );
                 l--;
                 h++;
             }
@@ -63,11 +62,4 @@ public class ThreeSumQuadratic implements ThreeSum {
     private final int[] a;
     private final int length;
 
-//    public static void main (String[] args) {
-////        System.out.println("Hello");
-//        int[] a = [-100, -90, -79, -68, -62, -51, -44, -37, -27, -17, -11, -4, 2, 9, 16, 32, 42, 49, 57, 67];
-//        ThreeSumQuadratic tsq = new ThreeSumQuadratic(a);
-//        Triple[] tri = tsq.getTriples();
-//        System.out.println(tri.length);
-//    }
 }

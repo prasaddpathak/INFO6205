@@ -1,5 +1,6 @@
 package edu.neu.coe.info6205.util;
 
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -57,7 +58,35 @@ public class Timer {
     public <T, U> double repeat(int n, Supplier<T> supplier, Function<T, U> function, UnaryOperator<T> preFunction, Consumer<U> postFunction) {
         logger.trace("repeat: with " + n + " runs");
         // FIXME: note that the timer is running when this method is called and should still be running when it returns. by replacing the following code
-         return 0;
+        pause();
+        for (int i = 0; i < n; i++) {
+            T tParameter = supplier.get();
+            T resultPreFunction = null;
+            U resultFunction = null;
+
+            if (preFunction != null && tParameter != null) {
+                System.out.println("prefunction");
+                resultPreFunction = preFunction.apply(tParameter);
+                System.out.println(resultPreFunction);
+            }
+            resume();
+
+            if (tParameter != null){
+                resultFunction = function.apply((resultPreFunction != null) ? resultPreFunction : tParameter);
+
+            }
+
+            lap();
+
+            pause();
+            if (postFunction!= null) {
+                postFunction.accept(resultFunction);
+            }
+
+        }
+        double meanTime = meanLapTime();
+        resume();
+        return meanTime;
         // END 
     }
 
@@ -177,8 +206,9 @@ public class Timer {
      */
     private static long getClock() {
         // FIXME by replacing the following code
-         return 0;
-        // END 
+        long clock = System.nanoTime();
+        return clock;
+        // END
     }
 
     /**
@@ -190,8 +220,9 @@ public class Timer {
      */
     private static double toMillisecs(long ticks) {
         // FIXME by replacing the following code
-         return 0;
-        // END 
+        double durationInMs = TimeUnit.NANOSECONDS.toMillis(ticks);
+        return durationInMs;
+        // END
     }
 
     final static LazyLogger logger = new LazyLogger(Timer.class);

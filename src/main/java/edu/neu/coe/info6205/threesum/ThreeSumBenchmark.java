@@ -4,6 +4,7 @@ import edu.neu.coe.info6205.util.Benchmark_Timer;
 import edu.neu.coe.info6205.util.TimeLogger;
 import edu.neu.coe.info6205.util.Utilities;
 
+import java.util.Date;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
@@ -18,8 +19,8 @@ public class ThreeSumBenchmark {
     public void runBenchmarks() {
         System.out.println("ThreeSumBenchmark: N=" + n);
         benchmarkThreeSum("ThreeSumQuadratic", (xs) -> new ThreeSumQuadratic(xs).getTriples(), n, timeLoggersQuadratic);
-        benchmarkThreeSum("ThreeSumQuadrithmic", (xs) -> new ThreeSumQuadrithmic(xs).getTriples(), n, timeLoggersQuadrithmic);
-        benchmarkThreeSum("ThreeSumCubic", (xs) -> new ThreeSumCubic(xs).getTriples(), n, timeLoggersCubic);
+//        benchmarkThreeSum("ThreeSumQuadrithmic", (xs) -> new ThreeSumQuadrithmic(xs).getTriples(), n, timeLoggersQuadrithmic);
+//        benchmarkThreeSum("ThreeSumCubic", (xs) -> new ThreeSumCubic(xs).getTriples(), n, timeLoggersCubic);
     }
 
     public static void main(String[] args) {
@@ -35,7 +36,13 @@ public class ThreeSumBenchmark {
     private void benchmarkThreeSum(final String description, final Consumer<int[]> function, int n, final TimeLogger[] timeLoggers) {
         if (description.equals("ThreeSumCubic") && n > 4000) return;
         // FIXME
-        // END 
+
+        Benchmark_Timer bt = new Benchmark_Timer<>(description, function);
+        double timerResult = bt.runFromSupplier(supplier,runs);
+        timeLoggers[0].log(timerResult,n);
+        timeLoggers[1].log(timerResult,n);
+
+        // END
     }
 
     private final static TimeLogger[] timeLoggersCubic = {
