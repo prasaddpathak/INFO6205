@@ -8,6 +8,8 @@
 package edu.neu.coe.info6205.union_find;
 
 import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Height-weighted Quick Union with Path Compression
@@ -82,6 +84,12 @@ public class UF_HWQUPC implements UF {
         validate(p);
         int root = p;
         // FIXME
+        while (root != parent[root]) {
+            if (pathCompression) {
+                doPathCompression(root);
+            }
+            root = parent[root];
+        }
         // END 
         return root;
     }
@@ -170,6 +178,18 @@ public class UF_HWQUPC implements UF {
 
     private void mergeComponents(int i, int j) {
         // FIXME make shorter root point to taller one
+        int p = find(i);
+        int q = find(j);
+        if (p == q) {
+            return;
+        }
+        if (height[p] < height[q]) {
+            updateParent(p, q);
+            updateHeight(q, p);
+        } else {
+            updateParent(q, p);
+            updateHeight(p, q);
+        }
         // END 
     }
 
@@ -178,6 +198,42 @@ public class UF_HWQUPC implements UF {
      */
     private void doPathCompression(int i) {
         // FIXME update parent to value of grandparent
+        parent[i] = parent[parent[i]];
         // END 
+    }
+
+
+    private static void printCount(int n) {
+        int connections = 0;
+        int pairs = 0;
+        UF_HWQUPC uf1 = new UF_HWQUPC(n);
+        Random rand = new Random();
+
+        while (uf1.components() != 1) {
+            int a = (int) (rand.nextInt(n));
+            int b = (int) (rand.nextInt(n));
+
+            pairs++;
+
+            if (uf1.connected(a, b) == false) {
+                uf1.union(a, b);
+                connections++;
+            }
+
+        }
+        System.out.println("Connections:" + connections);
+        System.out.println("Pairs" + pairs);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter No. of sites:");
+        int n = sc.nextInt();
+
+        UF_HWQUPC uf = new UF_HWQUPC(n, true);
+
+        printCount(n);
+
     }
 }
