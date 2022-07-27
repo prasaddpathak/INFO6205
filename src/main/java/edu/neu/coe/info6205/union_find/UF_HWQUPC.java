@@ -228,12 +228,13 @@ public class UF_HWQUPC implements UF {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Enter No. of sites:");
-        int n = sc.nextInt();
+        final int[] runs = {1000,2000,4000,8000,16000,32000,64000,128000};
 
-        UF_HWQUPC uf = new UF_HWQUPC(n, true);
+        for (int n: runs) {
+            UF_HWQUPC uf = new UF_HWQUPC(n, true);
+            printCount(n);
+        }
 
-        printCount(n);
 
     }
 }
